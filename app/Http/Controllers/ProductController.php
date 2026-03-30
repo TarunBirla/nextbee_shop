@@ -15,6 +15,22 @@ class ProductController extends Controller
         $products = Product::with('category')->get();
         return view('admin.products.index', compact('products'));
     }
+    public function search(Request $request)
+    {
+        $query = $request->q;
+
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        $products = Product::where('title', 'like', "%{$query}%")
+            ->orWhere('name', 'like', "%{$query}%")
+            ->select('id', 'title', 'price', 'image')
+            ->limit(8)
+            ->get();
+
+        return response()->json($products);
+    }
 
     public function create()
     {
@@ -23,34 +39,34 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'title' => 'required',
-        'price' => 'required',
-        'category_id' => 'required'
-    ]);
+    {
+        $request->validate([
+            'title' => 'required',
+            'price' => 'required',
+            'category_id' => 'required'
+        ]);
 
-    $data = $request->only(['title','description','price','category_id']);
+        $data = $request->only(['title', 'description', 'price', 'category_id']);
 
-    // IMAGE
-    if ($request->hasFile('image')) {
-        $file = $request->file('image');
-        $name = time().'.'.$file->getClientOriginalExtension();
-        $file->move(public_path('uploads'), $name);
-        $data['image'] = $name;
+        // IMAGE
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $name);
+            $data['image'] = $name;
+        }
+
+        Product::create($data);
+
+        return redirect('/admin/products')->with('success', 'Product added');
     }
-
-    Product::create($data);
-
-    return redirect('/admin/products')->with('success','Product added');
-}
 
     public function edit($id)
     {
         $product = Product::find($id);
         $categories = Category::all();
 
-        return view('admin.products.edit', compact('product','categories'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -61,7 +77,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $name = time().'.'.$file->getClientOriginalExtension();
+            $name = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads'), $name);
             $data['image'] = $name;
         }

@@ -9,13 +9,13 @@ use App\Models\Category;
 class HomeController extends Controller
 {
     // 🏠 HOME PAGE
- public function index()
-{
-    $products = Product::latest()->take(6)->get(); // ✅ latest 6
-    $categories = Category::all();
+    public function index()
+    {
+        $products = Product::latest()->take(8)->get(); // ✅ latest 8
+        $categories = Category::all();
 
-    return view('home', compact('products', 'categories'));
-}
+        return view('home', compact('products', 'categories'));
+    }
 
     // 📂 CATEGORY WISE PRODUCTS
     public function categoryProducts($id)
@@ -30,9 +30,14 @@ class HomeController extends Controller
     public function productDetail($id)
     {
         $product = Product::findOrFail($id);
-        $categories = Category::all();
 
-        return view('product-detail', compact('product', 'categories'));
+        // SAME CATEGORY RELATED PRODUCTS
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->take(8)
+            ->get();
+
+        return view('product-detail', compact('product', 'relatedProducts'));
     }
     public function allProduct()
     {

@@ -18,20 +18,24 @@
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
                 <!-- Logo -->
-                <a href="/" class="text-2xl font-bold text-[#253375] flex items-center gap-2">
+                <a href="/" class="text-2xl font-bold text-[#8B5E3C] flex items-center gap-2">
                     <i class="fa-solid fa-globe"></i>
                     Eurowide
                 </a>
-                <button class="md:hidden text-2xl text-[#253375]" onclick="toggleMobileMenu()">
+                <button class="md:hidden text-2xl text-[#8B5E3C]" onclick="toggleMobileMenu()">
                     <i class="fa-solid fa-bars"></i>
                 </button>
 
                 <!-- Search -->
                 <div class="flex-1 mx-6 hidden md:block relative">
-                    <input type="text" placeholder="Search products..."
-                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#253375] focus:outline-none">
+                    <input type="text" id="searchInput" onkeyup="searchProducts(this.value)"
+                        placeholder="Search products..."
+                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#8B5E3C] focus:outline-none">
 
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
+                    <div id="searchResults"
+                        class="absolute bg-white w-full shadow-lg rounded-lg mt-1 hidden z-50 max-h-72 overflow-y-auto">
+                    </div>
                 </div>
 
                 <!-- Right Side -->
@@ -43,7 +47,7 @@
 
                             <!-- Button -->
                             <button id="userBtn" onclick="toggleUserDropdown(event)"
-                                class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#1d2a5c]">
+                                class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#8B5E3C]">
                                 <i class="fa-solid fa-user"></i>
                                 {{ auth()->user()->name }}
                                 <i class="fa-solid fa-chevron-down text-sm"></i>
@@ -65,9 +69,7 @@
                                     <i class="fa-solid fa-box mr-2"></i> My Orders
                                 </a>
 
-                                <a href="/dashboard" class="block px-4 py-2 hover:bg-gray-100">
-                                    <i class="fa-solid fa-chart-line mr-2"></i> Dashboard
-                                </a>
+
 
                                 <form action="/logout" method="POST">
                                     @csrf
@@ -79,16 +81,16 @@
                             </div>
                         </div>
                     @else
-                        <a href="/login" class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                        <a href="/login" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2">
                             <i class="fa-solid fa-right-to-bracket"></i> Login
                         </a>
                     @endauth
 
-                    <a href="#" class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <a href="#" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2">
                         <i class="fa-solid fa-phone"></i> Call Now
                     </a>
 
-                    <a href="#" class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <a href="#" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2">
                         <i class="fa-solid fa-envelope"></i> Contact
                     </a>
 
@@ -96,13 +98,13 @@
             </div>
         </header>
         <!-- NAVBAR -->
-        <div class="bg-[#253375] hidden md:flex">
+        <div class="bg-[#8B5E3C] hidden md:flex">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-center items-center gap-10 py-3 text-white font-medium uppercase">
 
                     <a href="/" class="hover:text-gray-200">Home</a>
 
-                    <a href="#" class="hover:text-gray-200">Products</a>
+                    <a href="/products" class="hover:text-gray-200">Products</a>
 
                     <a href="#" class="hover:text-gray-200">About Us</a>
 
@@ -151,7 +153,7 @@
 
                     <!-- Button -->
                     <button onclick="toggleUserDropdown(event)"
-                        class="w-full bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center justify-between">
+                        class="w-full bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center justify-between">
 
                         <span>
                             <i class="fa-solid fa-user mr-2"></i>
@@ -176,9 +178,7 @@
                             <i class="fa-solid fa-box mr-2"></i> My Orders
                         </a>
 
-                        <a href="/dashboard" class="block px-4 py-2 hover:bg-gray-100">
-                            <i class="fa-solid fa-chart-line mr-2"></i> Dashboard
-                        </a>
+
 
                         <form action="/logout" method="POST">
                             @csrf
@@ -191,16 +191,16 @@
                 </div>
             @else
                 <a href="/login"
-                    class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
+                    class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
                     <i class="fa-solid fa-right-to-bracket"></i> Login
                 </a>
             @endauth
 
-            <a href="#" class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
+            <a href="#" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
                 <i class="fa-solid fa-phone"></i> Call Now
             </a>
 
-            <a href="#" class="bg-[#253375] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
+            <a href="#" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
                 <i class="fa-solid fa-envelope"></i> Contact
             </a>
 
@@ -208,7 +208,7 @@
 
         <!-- NAV LINKS -->
         <a href="/" class="block px-4 py-3 border-b hover:bg-gray-50">Home</a>
-        <a href="#" class="block px-4 py-3 border-b hover:bg-gray-50">Products</a>
+        <a href="/products" class="block px-4 py-3 border-b hover:bg-gray-50">Products</a>
         <a href="#" class="block px-4 py-3 border-b hover:bg-gray-50">About Us</a>
 
         <!-- CATEGORIES -->
@@ -235,7 +235,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-[#253375] text-white mt-10">
+    <footer class="bg-[#8B5E3C] text-white mt-10">
         <div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-6">
 
             <div>
@@ -261,13 +261,13 @@
             <div>
                 <h3 class="text-lg font-semibold mb-3">Subscribe</h3>
                 <input type="email" placeholder="Your email" class="w-full px-3 py-2 rounded-lg text-black mb-2">
-                <button class="bg-white text-blue-600 px-4 py-2 rounded-lg w-full">
+                <button class="bg-white text-black px-4 py-2 rounded-lg w-full">
                     Subscribe
                 </button>
             </div>
         </div>
 
-        <div class="text-center py-4 border-t border-blue-500 text-sm">
+        <div class="text-center py-4 border-t border-white text-sm">
             © 2026 Eurowide. All rights reserved.
         </div>
     </footer>
@@ -336,20 +336,22 @@
         });
     </script>
     <script>
-    function toggleUserDropdown(event) {
-        event.stopPropagation();
-        document.getElementById("userDropdown").classList.toggle("hidden");
-    }
+        function toggleUserDropdown(event) {
+            event.stopPropagation();
+            document.getElementById("userDropdown").classList.toggle("hidden");
+        }
 
-    function toggleMobileCategories() {
-        document.getElementById("mobileCategories").classList.toggle("hidden");
-    }
+        function toggleMobileCategories() {
+            document.getElementById("mobileCategories").classList.toggle("hidden");
+        }
 
-    // close dropdown when click outside
-    document.addEventListener("click", function () {
-        document.getElementById("userDropdown")?.classList.add("hidden");
-    });
-</script>
+        // close dropdown when click outside
+        document.addEventListener("click", function () {
+            document.getElementById("userDropdown")?.classList.add("hidden");
+        });
+    </script>
+
+    
 
 </body>
 

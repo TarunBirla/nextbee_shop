@@ -11,43 +11,46 @@ class AuthController extends Controller
 {
     // REGISTER
     public function register(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:6',
-        'role' => 'required'
-    ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'role' => 'required'
+        ]);
 
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => $request->role,
-    ]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
 
-    // ❌ remove Auth::login($user);
-    // ✅ direct login page
-    return redirect('/login')->with('success', 'Register success, please login');
-}
+        // ❌ remove Auth::login($user);
+        // ✅ direct login page
+        return redirect('/login')->with('success', 'Register success, please login');
+    }
 
     // LOGIN
     public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
+    {
+        $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
 
-        // 🔥 ROLE BASED REDIRECT
-        if (Auth::user()->role == 'bussiness_owner') {
-            return redirect('/admin/dashboard');
-        } else {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            if (trim($user->role) == 'business_owner') {
+                return redirect('/admin/dashboard');
+            }
+
             return redirect('/');
         }
-    }
 
-    return back()->with('error', 'Invalid credentials');
-}
+        return back()->with('error', 'Invalid credentials');
+    }
 
     // LOGOUT
     public function logout()
@@ -62,19 +65,19 @@ class AuthController extends Controller
         return view('auth.profile');
     }
     public function updateProfile(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email'
-    ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email'
+        ]);
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    $user->update([
-        'name' => $request->name,
-        'email' => $request->email
-    ]);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
 
-    return back()->with('success', 'Profile updated successfully');
-}
+        return back()->with('success', 'Profile updated successfully');
+    }
 }

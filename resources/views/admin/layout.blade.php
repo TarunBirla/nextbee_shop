@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -10,36 +11,39 @@
 <div class="flex">
 
     <!-- SIDEBAR -->
-    <div class="w-64 bg-[#253375] min-h-screen text-white p-5">
+   <!-- SIDEBAR -->
+<div class="w-64 bg-[#8B5E3C] min-h-screen text-white p-5">
 
-        <h2 class="text-xl font-bold mb-6">Admin Panel</h2>
+    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+        <i class="fa-solid fa-gauge"></i> Bussiness Owner
+    </h2>
 
-        <a href="/admin/dashboard"
-           class="block py-2 px-3 rounded {{ request()->is('admin/dashboard') ? 'bg-white text-black' : '' }}">
-            Dashboard
-        </a>
+    <a href="/admin/dashboard"
+       class="block py-2 px-3 rounded hover:bg-white hover:text-black">
+        <i class="fa-solid fa-chart-line mr-2"></i> Dashboard
+    </a>
 
-        <a href="/admin/products"
-           class="block py-2 px-3 rounded {{ request()->is('admin/products*') ? 'bg-white text-black' : '' }}">
-            Products
-        </a>
+    <a href="/admin/products"
+       class="block py-2 px-3 rounded hover:bg-white hover:text-black">
+        <i class="fa-solid fa-box mr-2"></i> Products
+    </a>
 
-        <a href="/admin/categories"
-           class="block py-2 px-3 rounded {{ request()->is('admin/categories*') ? 'bg-white text-black' : '' }}">
-            Categories
-        </a>
+    <a href="/admin/categories"
+       class="block py-2 px-3 rounded hover:bg-white hover:text-black">
+        <i class="fa-solid fa-list mr-2"></i> Categories
+    </a>
 
-        <a href="/admin/orders"
-           class="block py-2 px-3 rounded {{ request()->is('admin/orders*') ? 'bg-white text-black' : '' }}">
-            Orders
-        </a>
+    <a href="/admin/orders"
+       class="block py-2 px-3 rounded hover:bg-white hover:text-black">
+        <i class="fa-solid fa-cart-shopping mr-2"></i> Orders
+    </a>
 
-        <a href="/admin/users"
-           class="block py-2 px-3 rounded {{ request()->is('admin/users*') ? 'bg-white text-black' : '' }}">
-            Users
-        </a>
+    <a href="/admin/users"
+       class="block py-2 px-3 rounded hover:bg-white hover:text-black">
+        <i class="fa-solid fa-users mr-2"></i> Users
+    </a>
 
-    </div>
+</div>
 
     <!-- CONTENT -->
     <div class="flex-1">

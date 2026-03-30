@@ -7,16 +7,21 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+
 
 
 
 Route::post('/place-order', [OrderController::class, 'store'])->middleware('auth');
 Route::get('/my-orders', [OrderController::class, 'index'])->middleware('auth');
-
+Route::get('/order/{id}', [OrderController::class, 'show']);
+Route::post('/reorder/{id}', [OrderController::class, 'reorder']);
 Route::post('/add-to-cart/{id}', [CartController::class, 'add'])->middleware('auth');
 Route::get('/cart', [CartController::class, 'index'])->middleware('auth');
 Route::get('/remove-cart/{id}', [CartController::class, 'remove'])->middleware('auth');
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/search-products', [ProductController::class, 'search']);
 
 // CATEGORY PRODUCTS
 Route::get('/category/{id}', [HomeController::class, 'categoryProducts']);
@@ -42,14 +47,15 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->middle
 
 
 // ADMIN ROUTES
-Route::middleware(['auth', 'role:order_predictions'])->group(function () {
+Route::middleware(['auth', 'role:business_owner'])->group(function () {
 
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
+   
+     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+
+    
 
     Route::resource('/admin/products', ProductController::class);
     Route::resource('/admin/categories', CategoryController::class);
-    Route::resource('/admin/orders', OrderController::class);
-    Route::resource('/admin/users', UserController::class);
+   Route::get('/admin/orders', [AdminController::class, 'orders']);
+    Route::get('/admin/users', [AdminController::class, 'users']);
 });
