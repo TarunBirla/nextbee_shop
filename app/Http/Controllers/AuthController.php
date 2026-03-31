@@ -46,9 +46,22 @@ class AuthController extends Controller
         if (trim($user->role) == 'customer') {
             return redirect('/');
         }
+        if (trim($user->role) == 'business_owner') {
+            return redirect('/admin/dashboard');
+        }
+        if (trim($user->role) == 'sale_rep') {
+            return redirect('/sales');
+        }
+        if (trim($user->role) == 'inventory_manager') {
+            return redirect('/inventory');
+        }
+
+        if(trim($user->role) == 'delivery_team') {
+            return redirect('/delivery');
+        }
 
         // all other roles go to admin
-        return redirect('/admin/dashboard');
+        return redirect('/admin-dashboard');
     }
 
     return back()->with('error', 'Invalid credentials');

@@ -47,6 +47,21 @@ Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth');
 Route::get('/category/{id}', [HomeController::class, 'categoryProducts']);
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->middleware('auth');
 
+Route::get('/inventory', function () {
+    return view('inventory.index');
+})->name('inventory');
+
+Route::get('/sales', function () {
+    return view('sales.index');
+})->name('sales');
+
+Route::get('/delivery', function () {
+    return view('delivery.index');
+})->name('delivery');
+
+Route::get('/admin-dashboard', function () {
+    return view('adminLayout.index');
+})->name('admin-dashboard');
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'role:business_owner,sale_rep,inventory_manager,delivery_team'])->group(function () {
