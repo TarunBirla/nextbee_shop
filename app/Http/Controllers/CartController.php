@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
-
+use Illuminate\Http\Request;
 class CartController extends Controller
 {
     // ➕ ADD TO CART
@@ -47,5 +47,33 @@ class CartController extends Controller
         ->delete();
 
     return back()->with('success', 'Item removed');
+}
+public function addMultiple(Request $request)
+{
+    $products = $request->products;
+
+    if (!$products) {
+        return back()->with('error', 'No product selected');
+    }
+
+    foreach ($products as $item) {
+
+        $existing = Cart::where('user_id', auth()->id())
+            ->where('product_id', $item['id'])
+            ->first();
+
+        if ($existing) {
+            $existing->quantity += $item['qty'];
+            $existing->save();
+        } else {
+            Cart::create([
+                'user_id' => auth()->id(),
+                'product_id' => $item['id'],
+                'quantity' => $item['qty']
+            ]);
+        }
+    }
+
+    return redirect('/cart')->with('success', 'Products added to cart!');
 }
 }

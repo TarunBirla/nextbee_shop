@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
+    
     // 📦 PLACE ORDER
     public function store()
     {
@@ -70,11 +72,12 @@ class OrderController extends Controller
         return redirect('/cart')->with('success', 'Items added to cart again!');
     }
     // 📋 MY ORDERS
-    public function index()
-    {
-        $orders = Order::where('user_id', auth()->id())->latest()->get();
-        $categories = Category::all();
+   public function index()
+{
+    $orders = Order::where('user_id', auth()->id())->latest()->get();
+    $categories = Category::all();
+    $products = Product::all(); // 👈 ADD THIS
 
-        return view('orders', compact('orders', 'categories'));
-    }
+    return view('orders', compact('orders', 'categories', 'products'));
+}
 }

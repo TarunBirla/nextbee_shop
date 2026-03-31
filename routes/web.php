@@ -35,6 +35,7 @@ Route::get('/contacts', function () {
     return view('contacts');
 })->name('contacts');
 
+Route::post('/cart/add-multiple', [CartController::class, 'addMultiple'])->name('cart.add.multiple');
 Route::get('/register', fn() => view('auth.register'));
 Route::post('/register', [AuthController::class, 'register']);
 
