@@ -293,15 +293,25 @@ const products=[
   {id:11,name:'Chickpeas',cat:'Grains',price:85,qty:70,min:20,expiry:'2027-03-01',aisle:'C1',racks:['R6'],baskets:['B-11']},
   {id:12,name:'Orange Juice',cat:'Beverages',price:140,qty:22,min:8,expiry:'2026-04-20',aisle:'D1',racks:['R9'],baskets:['B-16']},
 ];
-const customers=[
-  {id:1,name:'Priya Sharma',phone:'9876543210',city:'Bhopal',orders:42,spend:38500,last:'2026-03-30',tier:'vip',email:'priya@email.com'},
-  {id:2,name:'Ravi Kumar',phone:'9823456701',city:'Bhopal',orders:28,spend:21200,last:'2026-03-29',tier:'vip',email:'ravi@email.com'},
-  {id:3,name:'Sunita Patel',phone:'9701234567',city:'Indore',orders:15,spend:9800,last:'2026-03-28',tier:'regular',email:'sunita@email.com'},
-  {id:4,name:'Amit Joshi',phone:'9612345678',city:'Bhopal',orders:3,spend:2400,last:'2026-03-31',tier:'new',email:'amit@email.com'},
-  {id:5,name:'Deepa Nair',phone:'9543217890',city:'Jabalpur',orders:19,spend:14700,last:'2026-03-27',tier:'regular',email:'deepa@email.com'},
-  {id:6,name:'Vikram Singh',phone:'9987654321',city:'Bhopal',orders:56,spend:52000,last:'2026-03-31',tier:'vip',email:'vikram@email.com'},
-  {id:7,name:'Meena Gupta',phone:'9867453201',city:'Sehore',orders:7,spend:5100,last:'2026-03-25',tier:'new',email:'meena@email.com'},
-  {id:8,name:'Arjun Verma',phone:'9754321098',city:'Bhopal',orders:33,spend:27800,last:'2026-03-30',tier:'regular',email:'arjun@email.com'},
+// const customers=[
+//   {id:1,name:'Priya Sharma',phone:'9876543210',city:'Bhopal',orders:42,spend:38500,last:'2026-03-30',tier:'vip',email:'priya@email.com'},
+//   {id:2,name:'Ravi Kumar',phone:'9823456701',city:'Bhopal',orders:28,spend:21200,last:'2026-03-29',tier:'vip',email:'ravi@email.com'},
+//   {id:3,name:'Sunita Patel',phone:'9701234567',city:'Indore',orders:15,spend:9800,last:'2026-03-28',tier:'regular',email:'sunita@email.com'},
+//   {id:4,name:'Amit Joshi',phone:'9612345678',city:'Bhopal',orders:3,spend:2400,last:'2026-03-31',tier:'new',email:'amit@email.com'},
+//   {id:5,name:'Deepa Nair',phone:'9543217890',city:'Jabalpur',orders:19,spend:14700,last:'2026-03-27',tier:'regular',email:'deepa@email.com'},
+//   {id:6,name:'Vikram Singh',phone:'9987654321',city:'Bhopal',orders:56,spend:52000,last:'2026-03-31',tier:'vip',email:'vikram@email.com'},
+//   {id:7,name:'Meena Gupta',phone:'9867453201',city:'Sehore',orders:7,spend:5100,last:'2026-03-25',tier:'new',email:'meena@email.com'},
+//   {id:8,name:'Arjun Verma',phone:'9754321098',city:'Bhopal',orders:33,spend:27800,last:'2026-03-30',tier:'regular',email:'arjun@email.com'},
+// ];
+const customers = [
+  {id:1,name:'Oliver Smith',phone:'9876543210',city:'London',orders:42,spend:38500,last:'2026-03-30',tier:'vip',email:'oliver@email.com'},
+  {id:2,name:'Harry Johnson',phone:'9823456701',city:'Manchester',orders:28,spend:21200,last:'2026-03-29',tier:'vip',email:'harry@email.com'},
+  {id:3,name:'Amelia Brown',phone:'9701234567',city:'Birmingham',orders:15,spend:9800,last:'2026-03-28',tier:'regular',email:'amelia@email.com'},
+  {id:4,name:'Jack Taylor',phone:'9612345678',city:'Leeds',orders:3,spend:2400,last:'2026-03-31',tier:'new',email:'jack@email.com'},
+  {id:5,name:'Isla Wilson',phone:'9543217890',city:'Liverpool',orders:19,spend:14700,last:'2026-03-27',tier:'regular',email:'isla@email.com'},
+  {id:6,name:'George Davies',phone:'9987654321',city:'London',orders:56,spend:52000,last:'2026-03-31',tier:'vip',email:'george@email.com'},
+  {id:7,name:'Sophia Evans',phone:'9867453201',city:'Sheffield',orders:7,spend:5100,last:'2026-03-25',tier:'new',email:'sophia@email.com'},
+  {id:8,name:'Noah Thomas',phone:'9754321098',city:'Bristol',orders:33,spend:27800,last:'2026-03-30',tier:'regular',email:'noah@email.com'},
 ];
 const STATUSES=['pending','confirmed','packed','shipped','delivered','cancelled'];
 const PAYMENTS=['COD','UPI','Card','Wallet'];

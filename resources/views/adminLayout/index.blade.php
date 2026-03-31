@@ -468,8 +468,37 @@ const PAYMENTS=['COD','UPI','Card','Prepaid'];
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function daysAgo(n){const d=new Date('2026-03-31');d.setDate(d.getDate()-n);return d.toISOString().split('T')[0];}
 
-const NAMES=['Priya Sharma','Ravi Kumar','Sunita Patel','Amit Joshi','Deepa Nair','Vikram Singh','Meena Gupta','Arjun Verma','Kavya Reddy','Suresh Nair','Pooja Shah','Rahul Mehta','Anita Singh','Kiran Patel','Mohan Das'];
-const AREAS=['Sector 4, Bhopal','MP Nagar, Bhopal','Arera Colony, Bhopal','Kolar Road, Bhopal','Habibganj, Bhopal','Shahpura, Bhopal','Indore','Jabalpur'];
+// const NAMES=['Priya Sharma','Ravi Kumar','Sunita Patel','Amit Joshi','Deepa Nair','Vikram Singh','Meena Gupta','Arjun Verma','Kavya Reddy','Suresh Nair','Pooja Shah','Rahul Mehta','Anita Singh','Kiran Patel','Mohan Das'];
+// const AREAS=['Sector 4, Bhopal','MP Nagar, Bhopal','Arera Colony, Bhopal','Kolar Road, Bhopal','Habibganj, Bhopal','Shahpura, Bhopal','Indore','Jabalpur'];
+
+const NAMES = [
+  'Oliver Smith',
+  'Harry Johnson',
+  'Amelia Brown',
+  'Jack Taylor',
+  'Isla Wilson',
+  'George Davies',
+  'Sophia Evans',
+  'Noah Thomas',
+  'Ava Clarke',
+  'Leo Walker',
+  'Mia Wright',
+  'Ethan Harris',
+  'Emily Turner',
+  'James Scott',
+  'Charlotte Hill'
+];
+
+const AREAS = [
+  'Camden, London',
+  'Canary Wharf, London',
+  'Greenwich, London',
+  'Hackney, London',
+  'Chelsea, London',
+  'Kensington, London',
+  'Manchester City Centre',
+  'Birmingham City Centre'
+];
 
 let users = Array.from({length:20},(_,i)=>{
   const role = i===0?'admin':i<3?'sales_manager':i<6?'inventory_manager':i<12?'delivery_agent':'customer';
@@ -507,7 +536,13 @@ const customers = Array.from({length:10},(_,i)=>({
   email:NAMES[i].split(' ')[0].toLowerCase()+'@email.com'
 }));
 
-const agentNames=['Arjun Kumar','Dev Patel','Sunil Rao','Mohan Singh'];
+// const agentNames=['Arjun Kumar','Dev Patel','Sunil Rao','Mohan Singh'];
+const agentNames = [
+  'James Wilson',
+  'Daniel Hughes',
+  'Michael Turner',
+  'Thomas Baker'
+];
 const orders = Array.from({length:50},(_,i)=>{
   const cust=customers[rnd(0,customers.length-1)];
   const items=Array.from({length:rnd(1,4)},()=>{const p=PRODUCTS[rnd(0,PRODUCTS.length-1)];const q=rnd(1,4);return{name:p.name,qty:q,price:p.price};});
@@ -601,7 +636,7 @@ function initDashboard(){
       ${roleBadge(u.role)}
     </div>`).join('');
   const acts=[
-    {icon:'👤',text:'New user registered: Priya Sharma',time:'3 min ago'},
+    {icon:'👤',text:'New user registered: Joe Root',time:'3 min ago'},
     {icon:'📦',text:'Order ORD-1049 delivered',time:'12 min ago'},
     {icon:'⚠️',text:'Low stock alert: Whole Wheat Bread',time:'28 min ago'},
     {icon:'🔐',text:'Admin login from 192.168.1.42',time:'1 hr ago'},
@@ -846,7 +881,14 @@ function renderAnalytics(){
   document.getElementById('analytics-status').innerHTML=Object.entries(statusCounts).map(([s,v])=>`
     <div class="flex items-center gap-3">${statusBadge(s)}<div class="flex-1"><div class="prog-track"><div class="prog-fill" style="width:${Math.round(v/maxStat*100)}%;background:${statColors[s]||'#aaa'};"></div></div></div><span class="text-xs font-700 text-gray-800 w-6 text-right">${v}</span></div>`).join('');
 
-  const areas=[['MP Nagar',84,'£38,400','96%'],['Arera Colony',72,'£31,200','94%'],['Habibganj',61,'£27,800','91%'],['Kolar Road',54,'£23,100','89%'],['Shahpura',43,'£18,500','87%']];
+  // const areas=[['MP Nagar',84,'£38,400','96%'],['Arera Colony',72,'£31,200','94%'],['Habibganj',61,'£27,800','91%'],['Kolar Road',54,'£23,100','89%'],['Shahpura',43,'£18,500','87%']];
+  const areas = [
+    ['Camden', 84, '£38,400', '96%'],
+    ['Canary Wharf', 72, '£31,200', '94%'],
+    ['Greenwich', 61, '£27,800', '91%'],
+    ['Hackney', 54, '£23,100', '89%'],
+    ['Kensington', 43, '£18,500', '87%']
+  ];
   document.getElementById('analytics-areas').innerHTML=areas.map(([a,o,r,d])=>`<tr><td class="text-xs text-gray-700">${a}</td><td class="text-xs font-700 text-gray-800 text-center">${o}</td><td class="text-xs font-700 text-gray-800">${r}</td><td class="text-xs text-green-600 font-700 text-center">${d}</td></tr>`).join('');
 
   const agentData=agentNames.map(n=>({name:n,delivered:rnd(12,22),failed:rnd(0,3),rating:(3.5+Math.random()*1.5).toFixed(1)}));

@@ -47,7 +47,7 @@ class AuthController extends Controller
             return redirect('/');
         }
         if (trim($user->role) == 'business_owner') {
-            return redirect('/admin/dashboard');
+            return redirect('/admin-dashboard');
         }
         if (trim($user->role) == 'sale_rep') {
             return redirect('/sales');

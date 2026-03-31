@@ -368,8 +368,34 @@ const PRODUCTS = ['Fresh Tomatoes','Organic Milk','Basmati Rice','Alphonso Mango
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function daysAgo(n){const d=new Date('2026-03-31');d.setDate(d.getDate()-n);return d.toISOString().split('T')[0];}
 function hoursAgo(n){const d=new Date('2026-03-31T14:00:00');d.setHours(d.getHours()-n);return d.toISOString();}
-const NAMES=['Priya Sharma','Ravi Kumar','Sunita Patel','Amit Joshi','Deepa Nair','Vikram Singh','Meena Gupta','Arjun Verma','Kavya Reddy','Suresh Nair','Pooja Shah','Rahul Mehta'];
-const AREAS=['Sector 4, Bhopal','MP Nagar, Bhopal','Arera Colony, Bhopal','Kolar Road, Bhopal','Habibganj, Bhopal','Shahpura, Bhopal','Hoshangabad Rd, Bhopal','TT Nagar, Bhopal'];
+// const NAMES=['Priya Sharma','Ravi Kumar','Sunita Patel','Amit Joshi','Deepa Nair','Vikram Singh','Meena Gupta','Arjun Verma','Kavya Reddy','Suresh Nair','Pooja Shah','Rahul Mehta'];
+// const AREAS=['Sector 4, Bhopal','MP Nagar, Bhopal','Arera Colony, Bhopal','Kolar Road, Bhopal','Habibganj, Bhopal','Shahpura, Bhopal','Hoshangabad Rd, Bhopal','TT Nagar, Bhopal'];
+
+const NAMES = [
+  'Oliver Smith',
+  'Harry Johnson',
+  'Amelia Brown',
+  'Jack Taylor',
+  'Isla Wilson',
+  'George Davies',
+  'Sophia Evans',
+  'Noah Thomas',
+  'Ava Clarke',
+  'Leo Walker',
+  'Mia Wright',
+  'Ethan Harris'
+];
+
+const AREAS = [
+  'Camden, London',
+  'Canary Wharf, London',
+  'Greenwich, London',
+  'Hackney, London',
+  'Chelsea, London',
+  'Kensington, London',
+  'Stratford, London',
+  'Croydon, London'
+];
 
 const deliveries = Array.from({length:24},(_,i)=>{
   const loc = LOCATIONS[rnd(0,2)];
@@ -531,7 +557,7 @@ function renderDispatch(){
       <td><div class="flex gap-1 flex-wrap"><span class="badge badge-purple text-xs">${d.aisle}</span><span class="badge badge-blue text-xs">${d.rack}</span><span class="badge badge-teal text-xs">${d.basket}</span></div></td>
       <td class="text-xs text-center text-gray-700 font-700">${d.itemCount}</td>
       <td class="text-xs text-gray-500">${new Date(d.dispatchTime).toLocaleString('en-GB',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'short'})}</td>
-      <td class="text-xs text-gray-600">Arjun Kumar</td>
+      <td class="text-xs text-gray-600">Sophia Evans</td>
       <td><span class="badge ${d.storedDays>=3?'badge-red':d.storedDays>=2?'badge-yellow':'badge-green'}">${d.storedDays}d ${d.storedHours}h</span></td>
       <td><span class="badge ${d.condition==='Good'?'badge-green':d.condition==='Moderate'?'badge-yellow':'badge-red'}">${d.condition}</span></td>
     </tr>`).join('');
