@@ -31,7 +31,9 @@ Route::get('/product/{id}', [HomeController::class, 'productDetail']);
 Route::get('/products', [HomeController::class, 'allProduct']);
 
 
-
+Route::get('/contacts', function () {
+    return view('contacts');
+})->name('contacts');
 
 Route::get('/register', fn() => view('auth.register'));
 Route::post('/register', [AuthController::class, 'register']);

@@ -90,7 +90,7 @@
                         <i class="fa-solid fa-phone"></i> Call Now
                     </a>
 
-                    <a href="#" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <a href="/contacts" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2">
                         <i class="fa-solid fa-envelope"></i> Contact
                     </a>
 
@@ -133,7 +133,7 @@
                         </div>
 
                     </div>
-                    <a href="#" class="hover:text-gray-200">Contact</a>
+                    <a href="/contacts" class="hover:text-gray-200">Contact</a>
 
                 </div>
             </div>
@@ -200,7 +200,7 @@
                 <i class="fa-solid fa-phone"></i> Call Now
             </a>
 
-            <a href="#" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
+            <a href="/contacts" class="bg-[#8B5E3C] text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center">
                 <i class="fa-solid fa-envelope"></i> Contact
             </a>
 
@@ -226,7 +226,7 @@
             @endforeach
         </div>
 
-        <a href="/contact" class="block px-4 py-3 hover:bg-gray-50">Contact</a>
+        <a href="/contacts" class="block px-4 py-3 hover:bg-gray-50">Contact</a>
 
     </div>
     <!-- CONTENT -->
@@ -247,8 +247,8 @@
                 <h3 class="text-lg font-semibold mb-3">Quick Links</h3>
                 <ul class="space-y-2 text-sm">
                     <li><a href="/">Home</a></li>
-                    <li><a href="#">Products</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/product">Products</a></li>
+                    <li><a href="/contacts">Contact</a></li>
                 </ul>
             </div>
 
