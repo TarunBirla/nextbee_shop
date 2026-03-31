@@ -401,8 +401,7 @@
                         </button>
                         <div id="userDrop" class="dropdown-menu">
                             <a href="/profile"><i class="fa-solid fa-user" style="color:var(--sky);"></i> My Profile</a>
-                            <a href="/cart"><i class="fa-solid fa-cart-shopping" style="color:var(--sky);"></i> My Cart</a>
-                            <a href="/my-orders"><i class="fa-solid fa-box" style="color:var(--sky);"></i> My Orders</a>
+                            <a href="/cart"><i class="fa-solid fa-cart-shopping" style="color:var(--sky);"></i> Dashboard</a>
                             <div class="dropdown-divider"></div>
                             <form action="/logout" method="POST">
                                 @csrf
