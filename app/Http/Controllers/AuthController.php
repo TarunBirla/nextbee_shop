@@ -32,25 +32,27 @@ class AuthController extends Controller
     }
 
     // LOGIN
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+  public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+    if (Auth::attempt($credentials)) {
 
-            $request->session()->regenerate();
+        $request->session()->regenerate();
 
-            $user = Auth::user();
+        $user = Auth::user();
 
-            if (trim($user->role) == 'business_owner') {
-                return redirect('/admin/dashboard');
-            }
-
+        // ONLY customer goes to frontend
+        if (trim($user->role) == 'customer') {
             return redirect('/');
         }
 
-        return back()->with('error', 'Invalid credentials');
+        // all other roles go to admin
+        return redirect('/admin/dashboard');
     }
+
+    return back()->with('error', 'Invalid credentials');
+}
 
     // LOGOUT
     public function logout()

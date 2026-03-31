@@ -2,74 +2,144 @@
 
 @section('content')
 
-<div class="flex justify-between items-center mb-4">
-    <h2 class="text-xl font-bold">Orders</h2>
+    <div class="p-6 ">
 
-    <span class="text-sm bg-orange-100 text-orange-700 px-3 py-1 rounded">
-        Total: {{ $orders->count() }}
-    </span>
-</div>
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Orders</h2>
 
-<div class="bg-white shadow rounded overflow-x-auto">
+            <span class="text-sm bg-orange-100 text-orange-700 px-4 py-1 rounded-full">
+                Total Orders: {{ $orders->count() }}
+            </span>
+        </div>
 
-    <table class="w-full">
+        <!-- Table -->
+        <div class="bg-white shadow-md rounded-xl overflow-x-auto">
 
-        <thead class="bg-gray-100">
-            <tr>
-                <th class="p-3 text-left">Order ID</th>
-                <th class="p-3 text-left">Customer</th>
-                <th class="p-3 text-left">Total</th>
-                <th class="p-3 text-left">Status</th>
-                <th class="p-3 text-left">Date</th>
-            </tr>
-        </thead>
+            <table class="w-full text-sm">
 
-        <tbody>
+                <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                    <tr>
+                        <th class="p-3 text-left">Order ID</th>
+                        <th class="p-3 text-left">Customer</th>
+                        <th class="p-3 text-left">Total</th>
+                        <th class="p-3 text-left">Status</th>
+                        <th class="p-3 text-left">Date</th>
+                        <th class="p-3 text-center">Action</th>
+                    </tr>
+                </thead>
 
-            @forelse($orders as $order)
+                <tbody>
 
-            <tr class="border-b hover:bg-gray-50">
+                    @forelse($orders as $order)
 
-                <td class="p-3">#{{ $order->id }}</td>
+                                    <tr class="border-b hover:bg-gray-50">
 
-                <td class="p-3 font-semibold">
-                    {{ $order->user->name ?? 'Guest' }}
-                </td>
+                                        <td class="p-3 font-semibold">#{{ $order->id }}</td>
 
-                <td class="p-3">
-                    £{{ $order->total_price }}
-                </td>
+                                        <!-- CUSTOMER -->
+                                        <td class="p-3">
+                                            <div class="font-semibold text-gray-800">
+                                                {{ $order->user->name ?? 'Guest' }}
+                                            </div>
+                                            <div class="text-xs text-gray-500">
+                                                {{ $order->user->email ?? '' }}
+                                            </div>
+                                        </td>
 
-                <td class="p-3">
-                    @if($order->status == 'pending')
-                        <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">Pending</span>
-                    @elseif($order->status == 'completed')
-                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-sm">Completed</span>
-                    @else
-                        <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-sm">{{ $order->status }}</span>
-                    @endif
-                </td>
+                                        <!-- TOTAL -->
+                                        <td class="p-3 font-medium text-gray-700">
+                                            £{{ $order->total_price }}
+                                        </td>
 
-                <td class="p-3 text-sm text-gray-500">
-                    {{ $order->created_at->format('d M Y') }}
-                </td>
+                                        <!-- STATUS -->
+                                        <td class="p-3">
 
-            </tr>
+                                            @php
+                                                $status = $order->status;
+                                            @endphp
 
-            @empty
+                                            <span class="px-3 py-1 rounded-full text-xs font-semibold
 
-            <tr>
-                <td colspan="5" class="text-center p-5 text-gray-500">
-                    No orders found
-                </td>
-            </tr>
+                            @if($status == 'pending')
+                                bg-yellow-100 text-yellow-700
 
-            @endforelse
+                            @elseif($status == 'confirmed')
+                                bg-blue-100 text-blue-700
 
-        </tbody>
+                            @elseif($status == 'processing')
+                                bg-indigo-100 text-indigo-700
 
-    </table>
+                            @elseif($status == 'shipped')
+                                bg-purple-100 text-purple-700
 
-</div>
+                            @elseif($status == 'out_for_delivery')
+                                bg-orange-100 text-orange-700
+
+                            @elseif($status == 'delivered')
+                                bg-green-100 text-green-700
+
+                            @elseif($status == 'completed')
+                                bg-emerald-100 text-emerald-700
+
+                            @elseif($status == 'cancelled')
+                                bg-red-100 text-red-700
+
+                            @else
+                                bg-gray-100 text-gray-700
+                            @endif
+                        ">
+                                                {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                            </span>
+
+                                        </td>
+
+                                        <!-- DATE -->
+                                        <td class="p-3 text-gray-500 text-sm">
+                                            {{ $order->created_at->format('d M Y') }}
+                                        </td>
+
+                                        <!-- ACTIONS -->
+                                        <td class="p-3 flex gap-2 justify-center">
+
+                                            <!-- VIEW -->
+                                            <a href="/admin/orders/{{ $order->id }}/view"
+                                                class="bg-blue-100 text-blue-600 px-3 py-1 rounded text-xs hover:bg-blue-200">
+                                                View
+                                            </a>
+
+
+                                            <!-- DELETE -->
+                                            <form method="POST" action="/admin/orders/{{ $order->id }}">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button onclick="return confirm('Delete this order?')"
+                                                    class="bg-red-100 text-red-600 px-3 py-1 rounded text-xs hover:bg-red-200">
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                        </td>
+
+                                    </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="6" class="text-center p-6 text-gray-500">
+                                No orders found
+                            </td>
+                        </tr>
+
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 @endsection

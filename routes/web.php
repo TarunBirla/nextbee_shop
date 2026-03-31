@@ -47,15 +47,25 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->middle
 
 
 // ADMIN ROUTES
-Route::middleware(['auth', 'role:business_owner'])->group(function () {
+Route::middleware(['auth', 'role:business_owner,sale_rep,inventory_manager,delivery_team'])->group(function () {
 
    
-     Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    //  Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+     Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+});
 
-    
+    Route::put('/admin/orders/{id}/status', [AdminController::class, 'updateStatus']);
+    Route::put('/admin/orders/{id}/cancel', [OrderController::class, 'cancelOrder']);
+Route::delete('/admin/orders/{id}', [AdminController::class, 'destroyOrder']);
+
+Route::get('/admin/orders', [AdminController::class, 'orders']);
+Route::get('/admin/orders/{id}/view', [AdminController::class, 'orderView']);
 
     Route::resource('/admin/products', ProductController::class);
     Route::resource('/admin/categories', CategoryController::class);
-   Route::get('/admin/orders', [AdminController::class, 'orders']);
-    Route::get('/admin/users', [AdminController::class, 'users']);
+    Route::get('/admin/users/create', [AdminController::class, 'createUser']);
+Route::post('/admin/users/store', [AdminController::class, 'storeUser']);
+Route::get('/admin/users', [AdminController::class, 'users']);
+Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser']);
 });

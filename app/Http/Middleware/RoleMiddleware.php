@@ -4,15 +4,20 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class RoleMiddleware
 {
-    public function handle($request, Closure $next, $role)
-    {
-        if (Auth::check() && Auth::user()->role == $role) {
-            return $next($request);
-        }
-
+   public function handle($request, Closure $next, ...$roles)
+{
+    if (!auth()->check()) {
         return redirect('/login');
     }
+
+    if (!in_array(auth()->user()->role, $roles)) {
+        abort(403, 'Unauthorized');
+    }
+
+    return $next($request);
+}
 }
