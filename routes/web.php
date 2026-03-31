@@ -36,6 +36,8 @@ Route::get('/contacts', function () {
 })->name('contacts');
 
 Route::post('/cart/add-multiple', [CartController::class, 'addMultiple'])->name('cart.add.multiple');
+Route::get('/order-products', [OrderController::class, 'allOrderProducts']);
+Route::post('/order/reorder-submit', [OrderController::class, 'reorderSubmit'])->name('order.reorder.submit');
 Route::get('/register', fn() => view('auth.register'));
 Route::post('/register', [AuthController::class, 'register']);
 

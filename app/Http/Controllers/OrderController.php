@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -79,5 +80,69 @@ class OrderController extends Controller
     $products = Product::all(); // 👈 ADD THIS
 
     return view('orders', compact('orders', 'categories', 'products'));
+}
+
+public function allOrderProducts()
+{
+    $items = Order::with('items.product')
+        ->where('user_id', auth()->id())
+        ->get()
+        ->pluck('items')
+        ->flatten()
+        ->whereNotNull('product');
+
+    $products = Product::all();
+    $categories = Category::all(); // 👈 ADD THIS
+
+    return view('order-products', compact('items', 'products', 'categories'));
+}
+
+public function reorderSubmit(Request $request)
+{
+    $products = $request->products;
+    $coupon = $request->coupon;
+
+    if (!$products || count($products) == 0) {
+        return back()->with('error', 'No products selected');
+    }
+
+    $total = 0;
+
+    // ✅ CALCULATE TOTAL
+    foreach ($products as $p) {
+        $product = Product::find($p['id']);
+
+        if (!$product) continue;
+
+        $total += $product->price * $p['qty'];
+    }
+
+    // ✅ APPLY COUPON
+    $discount = 0;
+
+    if ($coupon == 'SAVE10') {
+        $discount = $total * 0.10; // 10%
+    }
+
+    if ($coupon == 'FLAT50') {
+        $discount = 50; // flat
+    }
+
+    $finalTotal = $total - $discount;
+
+    // ✅ CREATE ORDER
+    $order = Order::create([
+        'user_id' => auth()->id(),
+        'total_price' => $finalTotal
+    ]);
+
+    foreach ($products as $p) {
+        $order->items()->create([
+            'product_id' => $p['id'],
+            'quantity' => $p['qty'],
+        ]);
+    }
+
+    return redirect('/my-orders')->with('success', 'Order placed with discount!');
 }
 }

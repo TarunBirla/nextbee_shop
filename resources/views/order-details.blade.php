@@ -238,6 +238,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--canvas); color: var
         <div class="nav-section-label">Orders</div>
         <a href="/cart" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>My Cart</a>
         <a href="/my-orders" class="nav-link active"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>My Orders</a>
+            <a href="/order-products" class="nav-link"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg> Order Products</a>
+
     </div>
     <div class="nav-section">
         <div class="nav-section-label">Support</div>
