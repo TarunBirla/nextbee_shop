@@ -435,10 +435,10 @@ tailwind.config = {
         <label class="block text-xs font-700 text-gray-500 mb-1 uppercase tracking-wider">Initial Quantity</label>
         <input id="cp-qty" type="number" class="input-field" placeholder="0"/>
       </div>
-      <div>
+      {{-- <div>
         <label class="block text-xs font-700 text-gray-500 mb-1 uppercase tracking-wider">Expiry Date</label>
         <input id="cp-expiry" type="date" class="input-field"/>
-      </div>
+      </div> --}}
       <div>
         <label class="block text-xs font-700 text-gray-500 mb-1 uppercase tracking-wider">Minimum Stock Level</label>
         <input id="cp-minstock" type="number" class="input-field" placeholder="5"/>
@@ -446,7 +446,7 @@ tailwind.config = {
     </div>
 
     <!-- Location -->
-    <div class="mt-5 p-4 rounded-xl border border-gray-200 bg-gray-50">
+    {{-- <div class="mt-5 p-4 rounded-xl border border-gray-200 bg-gray-50">
       <h3 class="font-syne font-700 text-sm text-gray-700 mb-4">📍 Storage Location</h3>
       <div class="grid grid-cols-3 gap-4">
         <div>
@@ -473,6 +473,15 @@ tailwind.config = {
           </div>
         </div>
       </div>
+    </div> --}}
+    <!-- Location -->
+    <div class="mt-5 p-4 rounded-xl border border-gray-200 bg-gray-50">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-syne font-700 text-sm text-gray-700">📍 Storage Location</h3>
+        <button onclick="addLocationRow()" class="px-3 py-2 rounded-lg text-xs font-700 text-white" style="background:#E8192C;">+</button>
+      </div>
+
+      <div id="location-rows" class="flex flex-col gap-3"></div>
     </div>
 
     <div class="mt-4">
@@ -502,14 +511,151 @@ tailwind.config = {
 <div id="toast" class="fixed bottom-6 right-6 px-5 py-3 rounded-xl text-white text-sm font-600 shadow-xl z-50 hidden" style="background:#00C48C;">✓ Product saved!</div>
 
 <script>
+
+
+function addLocationRow(data = {}) {
+  const container = document.getElementById('location-rows');
+
+  const row = document.createElement('div');
+  row.className = "grid grid-cols-4 gap-3 items-end";
+
+  row.innerHTML = `
+    <div>
+      <label class="text-xs text-gray-500">Aisle</label>
+      <select class="input-field aisle">
+        <option value="">Select</option>
+        <option ${data.aisle=='A1'?'selected':''}>A1</option>
+        <option ${data.aisle=='A2'?'selected':''}>A2</option>
+        <option ${data.aisle=='B1'?'selected':''}>B1</option>
+        <option ${data.aisle=='B2'?'selected':''}>B2</option>
+        <option ${data.aisle=='C1'?'selected':''}>C1</option>
+        <option ${data.aisle=='C2'?'selected':''}>C2</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="text-xs text-gray-500">Rack</label>
+      <input class="input-field rack" placeholder="R1" value="${data.rack || ''}">
+    </div>
+
+    <div>
+      <label class="text-xs text-gray-500">Basket</label>
+      <input class="input-field basket" placeholder="B-01" value="${data.basket || ''}">
+    </div>
+
+    <div>
+      <label class="text-xs text-gray-500">Expiry</label>
+      <input type="date" class="input-field expiry" value="${data.expiry || ''}">
+    </div>
+
+    <div class="col-span-4 text-right">
+      <button onclick="this.closest('.grid').remove()" class="text-xs text-red-500 font-600">Remove</button>
+    </div>
+  `;
+
+  container.appendChild(row);
+}
+
 // ===== STATE =====
+// let products = [
+//   { id:1, name:'Fresh Tomatoes', category:'Vegetables', unit:'kg', price:40, qty:120, minStock:20, expiry:'2025-08-15', aisle:'A1', racks:['R1','R2'], baskets:['B-01','B-02'], status:'active', desc:'Locally sourced fresh tomatoes' },
+//   { id:2, name:'Organic Milk', category:'Dairy', unit:'litre', price:65, qty:8, minStock:15, expiry:'2025-04-10', aisle:'B2', racks:['R3'], baskets:['B-05'], status:'active', desc:'Full cream organic milk' },
+//   { id:3, name:'Basmati Rice', category:'Grains & Cereals', unit:'kg', price:120, qty:200, minStock:30, expiry:'2026-01-01', aisle:'C1', racks:['R5','R6','R7'], baskets:['B-10'], status:'active', desc:'Premium aged basmati rice' },
+//   { id:4, name:'Alphonso Mangoes', category:'Fruits', unit:'kg', price:250, qty:4, minStock:10, expiry:'2025-04-18', aisle:'A2', racks:['R2'], baskets:['B-03','B-04'], status:'active', desc:'Premium Ratnagiri Alphonso' },
+//   { id:5, name:'Green Tea Bags', category:'Beverages', unit:'pack', price:180, qty:55, minStock:10, expiry:'2026-06-30', aisle:'D1', racks:['R9'], baskets:['B-15'], status:'active', desc:'Premium green tea 25 bags' },
+//   { id:6, name:'Turmeric Powder', category:'Spices', unit:'pack', price:45, qty:90, minStock:20, expiry:'2025-12-31', aisle:'C2', racks:['R8'], baskets:['B-12','B-13'], status:'active', desc:'Pure organic turmeric' },
+// ];
+
 let products = [
-  { id:1, name:'Fresh Tomatoes', category:'Vegetables', unit:'kg', price:40, qty:120, minStock:20, expiry:'2025-08-15', aisle:'A1', racks:['R1','R2'], baskets:['B-01','B-02'], status:'active', desc:'Locally sourced fresh tomatoes' },
-  { id:2, name:'Organic Milk', category:'Dairy', unit:'litre', price:65, qty:8, minStock:15, expiry:'2025-04-10', aisle:'B2', racks:['R3'], baskets:['B-05'], status:'active', desc:'Full cream organic milk' },
-  { id:3, name:'Basmati Rice', category:'Grains & Cereals', unit:'kg', price:120, qty:200, minStock:30, expiry:'2026-01-01', aisle:'C1', racks:['R5','R6','R7'], baskets:['B-10'], status:'active', desc:'Premium aged basmati rice' },
-  { id:4, name:'Alphonso Mangoes', category:'Fruits', unit:'kg', price:250, qty:4, minStock:10, expiry:'2025-04-18', aisle:'A2', racks:['R2'], baskets:['B-03','B-04'], status:'active', desc:'Premium Ratnagiri Alphonso' },
-  { id:5, name:'Green Tea Bags', category:'Beverages', unit:'pack', price:180, qty:55, minStock:10, expiry:'2026-06-30', aisle:'D1', racks:['R9'], baskets:['B-15'], status:'active', desc:'Premium green tea 25 bags' },
-  { id:6, name:'Turmeric Powder', category:'Spices', unit:'pack', price:45, qty:90, minStock:20, expiry:'2025-12-31', aisle:'C2', racks:['R8'], baskets:['B-12','B-13'], status:'active', desc:'Pure organic turmeric' },
+  {
+    id:1,
+    name:'Fresh Tomatoes',
+    category:'Vegetables',
+    unit:'kg',
+    price:40,
+    qty:120,
+    minStock:20,
+    locations:[
+      {aisle:'A1', rack:'R1', basket:'B-01', expiry:'2025-08-15'},
+      {aisle:'A1', rack:'R2', basket:'B-02', expiry:'2025-08-18'}
+    ],
+    status:'active',
+    desc:'Locally sourced fresh tomatoes'
+  },
+  {
+    id:2,
+    name:'Organic Milk',
+    category:'Dairy',
+    unit:'litre',
+    price:65,
+    qty:8,
+    minStock:15,
+    locations:[
+      {aisle:'B2', rack:'R3', basket:'B-05', expiry:'2025-04-10'}
+    ],
+    status:'active',
+    desc:'Full cream organic milk'
+  },
+  {
+    id:3,
+    name:'Basmati Rice',
+    category:'Grains & Cereals',
+    unit:'kg',
+    price:120,
+    qty:200,
+    minStock:30,
+    locations:[
+      {aisle:'C1', rack:'R5', basket:'B-10', expiry:'2026-01-01'},
+      {aisle:'C1', rack:'R6', basket:'B-11', expiry:'2026-02-01'},
+      {aisle:'C1', rack:'R7', basket:'B-12', expiry:'2026-03-01'}
+    ],
+    status:'active',
+    desc:'Premium aged basmati rice'
+  },
+  {
+    id:4,
+    name:'Alphonso Mangoes',
+    category:'Fruits',
+    unit:'kg',
+    price:250,
+    qty:4,
+    minStock:10,
+    locations:[
+      {aisle:'A2', rack:'R2', basket:'B-03', expiry:'2025-04-18'},
+      {aisle:'A2', rack:'R2', basket:'B-04', expiry:'2025-04-20'}
+    ],
+    status:'active',
+    desc:'Premium Ratnagiri Alphonso'
+  },
+  {
+    id:5,
+    name:'Green Tea Bags',
+    category:'Beverages',
+    unit:'pack',
+    price:180,
+    qty:55,
+    minStock:10,
+    locations:[
+      {aisle:'D1', rack:'R9', basket:'B-15', expiry:'2026-06-30'}
+    ],
+    status:'active',
+    desc:'Premium green tea 25 bags'
+  },
+  {
+    id:6,
+    name:'Turmeric Powder',
+    category:'Spices',
+    unit:'pack',
+    price:45,
+    qty:90,
+    minStock:20,
+    locations:[
+      {aisle:'C2', rack:'R8', basket:'B-12', expiry:'2025-12-31'},
+      {aisle:'C2', rack:'R8', basket:'B-13', expiry:'2026-01-15'}
+    ],
+    status:'active',
+    desc:'Pure organic turmeric'
+  }
 ];
 let nextId = 7;
 let currentFilter = 'all';
@@ -559,7 +705,10 @@ function renderProducts() {
   tbody.innerHTML = fp.map(p => {
     const isLow = p.qty <= p.minStock;
     const pct = Math.min(100, Math.round((p.qty/(p.minStock*3))*100));
-    const locStr = [p.aisle, p.racks.join('/'), p.baskets.join('/')].filter(Boolean).join(' · ');
+    // const locStr = [p.aisle, p.racks.join('/'), p.baskets.join('/')].filter(Boolean).join(' · ');
+    const locStr = (p.locations || [])
+  .map(l => `${l.aisle}-${l.rack}-${l.basket} (${l.expiry || '—'})`)
+  .join(' | ');
     return `
     <tr class="border-b border-gray-50 stock-row cursor-pointer" onclick="viewProduct(${p.id})">
       <td class="px-5 py-4">
@@ -597,9 +746,19 @@ function deleteProduct(id) {
   if(confirm('Delete this product?')) { products = products.filter(p=>p.id!==id); renderProducts(); renderStock(); }
 }
 
+
 // ===== VIEW PRODUCT =====
 function viewProduct(id) {
+  
   const p = products.find(x=>x.id===id); if(!p) return;
+  const locationHTML = (p.locations || []).map(l => `
+    <div class="p-2 rounded bg-white border text-xs">
+      <div><b>Aisle:</b> ${l.aisle}</div>
+      <div><b>Rack:</b> ${l.rack}</div>
+      <div><b>Basket:</b> ${l.basket}</div>
+      <div><b>Expiry:</b> ${l.expiry || '—'}</div>
+    </div>
+  `).join('');
   document.getElementById('view-content').innerHTML = `
     <div class="flex items-center gap-4 mb-5">
       <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-4xl" style="background:#F0F2F8;">${categoryEmoji(p.category)}</div>
@@ -613,20 +772,30 @@ function viewProduct(id) {
       <div class="p-3 rounded-xl bg-gray-50"><div class="text-xs text-gray-400 mb-1">Price</div><div class="font-600 text-gray-800">£${p.price}</div></div>
       <div class="p-3 rounded-xl bg-gray-50"><div class="text-xs text-gray-400 mb-1">Quantity</div><div class="font-600 text-gray-800">${p.qty} ${p.unit}</div></div>
       <div class="p-3 rounded-xl bg-gray-50"><div class="text-xs text-gray-400 mb-1">Min Stock</div><div class="font-600 text-gray-800">${p.minStock}</div></div>
-      <div class="p-3 rounded-xl bg-gray-50"><div class="text-xs text-gray-400 mb-1">Expiry</div><div class="font-600 text-gray-800">${p.expiry||'—'}</div></div>
+      
     </div>
+    
     <div class="p-4 rounded-xl border border-gray-200 bg-blue-50 mb-4">
       <div class="text-xs font-700 text-gray-500 uppercase tracking-wider mb-2">📍 Storage Location</div>
-      <div class="grid grid-cols-3 gap-3 text-sm">
-        <div><span class="text-gray-400">Aisle: </span><span class="font-700">${p.aisle||'—'}</span></div>
-        <div><span class="text-gray-400">Racks: </span><span class="font-700">${p.racks.join(', ')||'—'}</span></div>
-        <div><span class="text-gray-400">Baskets: </span><span class="font-700">${p.baskets.join(', ')||'—'}</span></div>
+      <div class="grid grid-cols-2 gap-2">
+        ${locationHTML || 'No locations'}
       </div>
     </div>
     ${p.desc?`<div class="text-sm text-gray-500">${p.desc}</div>`:''}
   `;
   document.getElementById('view-modal').classList.remove('hidden');
 }
+      // <div class="p-3 rounded-xl bg-gray-50"><div class="text-xs text-gray-400 mb-1">Expiry</div><div class="font-600 text-gray-800">${p.expiry||'—'}</div></div>
+
+
+// <div class="p-4 rounded-xl border border-gray-200 bg-blue-50 mb-4">
+//       <div class="text-xs font-700 text-gray-500 uppercase tracking-wider mb-2">📍 Storage Location</div>
+//       <div class="grid grid-cols-3 gap-3 text-sm">
+//         <div><span class="text-gray-400">Aisle: </span><span class="font-700">${p.aisle||'—'}</span></div>
+//         <div><span class="text-gray-400">Racks: </span><span class="font-700">${p.racks.join(', ')||'—'}</span></div>
+//         <div><span class="text-gray-400">Baskets: </span><span class="font-700">${p.baskets.join(', ')||'—'}</span></div>
+//       </div>
+//     </div>
 function closeViewProduct(){ document.getElementById('view-modal').classList.add('hidden'); }
 
 // ===== STOCK MANAGEMENT =====
@@ -635,11 +804,39 @@ function renderStock() {
   const fp = products.filter(p => p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q));
   const tbody = document.getElementById('stock-table-body');
   tbody.innerHTML = fp.map(p => {
-    const today = new Date(); 
-    const expDate = p.expiry ? new Date(p.expiry) : null;
-    const daysLeft = expDate ? Math.ceil((expDate-today)/(1000*60*60*24)) : null;
-    const expClass = daysLeft === null ? '' : daysLeft < 0 ? 'expiry-bad' : daysLeft <= 14 ? 'expiry-warn' : 'expiry-ok';
-    const expLabel = daysLeft === null ? '—' : daysLeft < 0 ? `Expired (${Math.abs(daysLeft)}d ago)` : daysLeft === 0 ? 'Today!' : `${daysLeft}d left`;
+    // const today = new Date(); 
+    // const expDate = p.expiry ? new Date(p.expiry) : null;
+    // const daysLeft = expDate ? Math.ceil((expDate-today)/(1000*60*60*24)) : null;
+    // const expClass = daysLeft === null ? '' : daysLeft < 0 ? 'expiry-bad' : daysLeft <= 14 ? 'expiry-warn' : 'expiry-ok';
+    // const expLabel = daysLeft === null ? '—' : daysLeft < 0 ? `Expired (${Math.abs(daysLeft)}d ago)` : daysLeft === 0 ? 'Today!' : `${daysLeft}d left`;
+    const today = new Date();
+
+    const nearestExpiry = (p.locations || [])
+      .map(l => l.expiry)
+      .filter(Boolean)
+      .sort()[0];
+
+    const expDate = nearestExpiry ? new Date(nearestExpiry) : null;
+
+    const daysLeft = expDate 
+      ? Math.ceil((expDate - today) / (1000 * 60 * 60 * 24)) 
+      : null;
+
+    const expClass = daysLeft === null 
+      ? '' 
+      : daysLeft < 0 
+        ? 'expiry-bad' 
+        : daysLeft <= 14 
+          ? 'expiry-warn' 
+          : 'expiry-ok';
+
+    const expLabel = daysLeft === null 
+      ? '—' 
+      : daysLeft < 0 
+        ? `Expired (${Math.abs(daysLeft)}d ago)` 
+        : daysLeft === 0 
+          ? 'Today!' 
+          : `${daysLeft}d left`;
     const isLow = p.qty <= p.minStock;
     return `
     <tr class="border-b border-gray-50 stock-row">
@@ -664,7 +861,13 @@ function renderStock() {
         </div>
       </td>
       <td class="px-3 py-4 text-center">
-        <input id="exp-${p.id}" type="date" value="${p.expiry||''}" class="border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-brand"/>
+        <div class="flex flex-col gap-1">
+          ${(p.locations || []).map((l,i)=>`
+            <div class="text-xs border rounded px-2 py-1 bg-gray-50">
+              ${l.aisle}-${l.rack} → ${l.expiry || '—'}
+            </div>
+          `).join('')}
+        </div>
         <div class="text-xs mt-1 font-600 ${expClass}">${expLabel}</div>
       </td>
       <td class="px-3 py-4 text-center">
@@ -679,6 +882,11 @@ function renderStock() {
   }).join('');
 }
 
+      // <td class="px-3 py-4 text-center">
+      //   <input id="exp-${p.id}" type="date" value="${p.expiry||''}" class="border border-gray-200 rounded-lg px-2 py-1 text-sm outline-none focus:border-brand"/>
+      //   <div class="text-xs mt-1 font-600 ${expClass}">${expLabel}</div>
+      // </td>
+
 function adjQty(id, delta) {
   const input = document.getElementById('qty-'+id);
   let v = parseInt(input.value)||0;
@@ -690,7 +898,9 @@ function saveStock(id) {
   const qty = parseInt(document.getElementById('qty-'+id).value)||0;
   const exp = document.getElementById('exp-'+id).value;
   const p = products.find(x=>x.id===id);
-  if(p){ p.qty = qty; p.expiry = exp; }
+  // if(p){ p.qty = qty; p.expiry = exp; }
+  if(p){ p.qty = qty; }
+
   showToast('✓ Stock updated for '+p.name);
   renderStock();
 }
@@ -698,9 +908,13 @@ function saveStock(id) {
 // ===== CREATE PRODUCT MODAL =====
 function openCreateProduct() {
   racks=[]; baskets=[];
-  document.getElementById('rack-tags').innerHTML='';
-  document.getElementById('basket-tags').innerHTML='';
-  ['cp-name','cp-price','cp-qty','cp-expiry','cp-minstock','cp-desc'].forEach(id=>{
+  // document.getElementById('rack-tags').innerHTML='';
+  // document.getElementById('basket-tags').innerHTML='';
+  document.getElementById('location-rows').innerHTML = '';
+  addLocationRow(); // first row auto
+  // ['cp-name','cp-price','cp-qty','cp-expiry','cp-minstock','cp-desc'].forEach(id=>{
+  ['cp-name','cp-price','cp-qty','cp-minstock','cp-desc'].forEach(id=>{
+
     const el=document.getElementById(id); if(el) el.value='';
   });
   document.getElementById('create-modal').classList.remove('hidden');
@@ -728,27 +942,78 @@ function removeTag(type, idx) {
   else { baskets.splice(idx,1); renderTags('basket',baskets,'#0A84FF'); }
 }
 
+// function saveProduct() {
+//   const name = document.getElementById('cp-name').value.trim();
+//   const price = parseFloat(document.getElementById('cp-price').value)||0;
+//   if(!name){ alert('Product name is required'); return; }
+//   const p = {
+//     id: nextId++,
+//     name, price,
+//     category: document.getElementById('cp-category').value,
+//     unit: document.getElementById('cp-unit').value,
+//     qty: parseInt(document.getElementById('cp-qty').value)||0,
+//     minStock: parseInt(document.getElementById('cp-minstock').value)||5,
+//     expiry: document.getElementById('cp-expiry').value,
+//     aisle: document.getElementById('cp-aisle').value,
+//     racks: [...racks],
+//     baskets: [...baskets],
+//     desc: document.getElementById('cp-desc').value,
+//     status: 'active'
+//   };
+//   products.push(p);
+//   closeCreateProduct();
+//   showToast('✓ Product created: '+name);
+//   renderProducts();
+// }
+
 function saveProduct() {
   const name = document.getElementById('cp-name').value.trim();
-  const price = parseFloat(document.getElementById('cp-price').value)||0;
-  if(!name){ alert('Product name is required'); return; }
+  const price = parseFloat(document.getElementById('cp-price').value) || 0;
+
+  if (!name) {
+    alert('Product name is required');
+    return;
+  }
+
+  // 👉 NEW LOCATION LOGIC (PUT HERE)
+  const locationRows = document.querySelectorAll('#location-rows .grid');
+  const locations = [];
+
+  locationRows.forEach(row => {
+    locations.push({
+      aisle: row.querySelector('.aisle').value,
+      rack: row.querySelector('.rack').value,
+      basket: row.querySelector('.basket').value,
+      expiry: row.querySelector('.expiry').value
+    });
+  });
+
   const p = {
     id: nextId++,
-    name, price,
+    name,
+    price,
     category: document.getElementById('cp-category').value,
     unit: document.getElementById('cp-unit').value,
-    qty: parseInt(document.getElementById('cp-qty').value)||0,
-    minStock: parseInt(document.getElementById('cp-minstock').value)||5,
-    expiry: document.getElementById('cp-expiry').value,
-    aisle: document.getElementById('cp-aisle').value,
-    racks: [...racks],
-    baskets: [...baskets],
+    qty: parseInt(document.getElementById('cp-qty').value) || 0,
+    minStock: parseInt(document.getElementById('cp-minstock').value) || 5,
+
+    // ❌ REMOVE OLD
+    // expiry: document.getElementById('cp-expiry').value,
+    // aisle: document.getElementById('cp-aisle').value,
+    // racks: [...racks],
+    // baskets: [...baskets],
+
+    // ✅ ADD NEW
+    locations: locations,
+
     desc: document.getElementById('cp-desc').value,
     status: 'active'
   };
+
   products.push(p);
+
   closeCreateProduct();
-  showToast('✓ Product created: '+name);
+  showToast('✓ Product created: ' + name);
   renderProducts();
 }
 
