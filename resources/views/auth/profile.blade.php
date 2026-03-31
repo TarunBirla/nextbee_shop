@@ -52,7 +52,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--canvas); color: var
 .brand-icon { width: 34px; height: 34px; background: var(--accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .brand-icon svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; }
 .brand-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: #fff; }
-.brand-sub { font-size: 0.65rem; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px; }
+.brand-sub { font-size: 0.65rem; color: #fff; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px; }
 .nav-section { padding: 10px 14px 4px; }
 .nav-section-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; padding: 8px 8px 4px; }
 .nav-link { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius-sm); color: #fff; text-decoration: none; font-size: 0.84rem; font-weight: 400; transition: color 0.15s, background 0.15s; position: relative; }

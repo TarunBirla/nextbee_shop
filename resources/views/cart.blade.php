@@ -86,7 +86,7 @@ body {
 }
 .brand-sub {
     font-size: 0.65rem;
-    color: rgba(255,255,255,0.35);
+    color: #fff;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-top: 1px;
