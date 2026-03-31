@@ -55,7 +55,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--canvas); color: var
 .brand-sub { font-size: 0.65rem; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px; }
 .nav-section { padding: 10px 14px 4px; }
 .nav-section-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; padding: 8px 8px 4px; }
-.nav-link { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius-sm); color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.84rem; font-weight: 400; transition: color 0.15s, background 0.15s; position: relative; }
+.nav-link { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius-sm); color: #fff; text-decoration: none; font-size: 0.84rem; font-weight: 400; transition: color 0.15s, background 0.15s; position: relative; }
 .nav-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; flex-shrink: 0; }
 .nav-link:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.05); }
 .nav-link.active { color: #fff; background: rgba(26,86,219,0.25); font-weight: 500; }
