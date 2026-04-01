@@ -76,4 +76,59 @@ public function addMultiple(Request $request)
 
     return redirect('/cart')->with('success', 'Products added to cart!');
 }
+
+// ➕ INCREASE QTY
+public function increase($id)
+{
+    $item = Cart::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->first();
+
+    if ($item) {
+        $item->quantity += 1;
+        $item->save();
+    }
+
+    return back();
+}
+
+// ➖ DECREASE QTY
+public function decrease($id)
+{
+    $item = Cart::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->first();
+
+    if ($item) {
+
+        if ($item->quantity > 1) {
+            $item->quantity -= 1;
+            $item->save();
+        } else {
+            $item->delete(); // qty 1 hai to remove
+        }
+    }
+
+    return back();
+}
+public function updateQty(Request $request, $id)
+{
+    $item = Cart::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->first();
+
+    if ($item) {
+
+        $qty = (int) $request->qty;
+
+        if ($qty <= 0) {
+            $item->delete(); // remove if 0
+        } else {
+            $item->quantity = $qty;
+            $item->save();
+        }
+    }
+
+    return back();
+}
 }

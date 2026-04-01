@@ -14,6 +14,9 @@ use App\Http\Controllers\UserController;
 
 
 Route::post('/place-order', [OrderController::class, 'store'])->middleware('auth');
+Route::get('/cart/increase/{id}', [CartController::class, 'increase']);
+Route::get('/cart/decrease/{id}', [CartController::class, 'decrease']);
+Route::post('/cart/update/{id}', [CartController::class, 'updateQty']);
 Route::get('/my-orders', [OrderController::class, 'index'])->middleware('auth');
 Route::get('/order/{id}', [OrderController::class, 'show']);
 Route::post('/reorder/{id}', [OrderController::class, 'reorder']);
